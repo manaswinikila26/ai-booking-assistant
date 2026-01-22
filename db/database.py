@@ -1,10 +1,13 @@
 import sqlite3
 
-def init_db():
-    conn = sqlite3.connect("bookings.db")
-    cur = conn.cursor()
+DB_PATH = "booking.db"
 
-    cur.execute("""
+
+def init_db():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
     CREATE TABLE IF NOT EXISTS customers (
         customer_id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
@@ -13,16 +16,15 @@ def init_db():
     )
     """)
 
-    cur.execute("""
+    cursor.execute("""
     CREATE TABLE IF NOT EXISTS bookings (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         customer_id INTEGER,
         booking_type TEXT,
         date TEXT,
         time TEXT,
-        status TEXT DEFAULT 'confirmed',
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+        status TEXT DEFAULT 'CONFIRMED',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     """)
 

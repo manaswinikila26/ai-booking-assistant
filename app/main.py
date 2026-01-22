@@ -16,6 +16,7 @@ from app.rag_pipeline import extract_text_from_pdfs
 st.set_page_config(page_title="Booking AI", layout="wide")
 init_db()
 
+
 if "page" not in st.session_state:
     st.session_state.page = "landing"
 
@@ -28,6 +29,8 @@ if "chat_booking" not in st.session_state:
 if "chat_step" not in st.session_state:
     st.session_state.chat_step = None
 
+
+
 if st.session_state.page == "landing":
     st.markdown(
         "<h1 style='text-align:center;'>Smart Booking,<br>Powered by AI</h1>",
@@ -38,10 +41,20 @@ if st.session_state.page == "landing":
         unsafe_allow_html=True,
     )
 
-    col1, col2, col3 = st.columns([4, 2, 4])
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    
+    col1, col2, col3 = st.columns([3, 2, 3])
+
     with col2:
         if st.button("🚀 Try the Demo"):
             st.session_state.page = "chat"
+            st.rerun()
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        if st.button("🔐 Admin Dashboard"):
+            st.session_state.page = "admin"
             st.rerun()
 
     st.markdown("<br><br>", unsafe_allow_html=True)
@@ -53,6 +66,8 @@ if st.session_state.page == "landing":
         st.info("📄 Document Knowledge")
     with c3:
         st.info("⚡ Instant Scheduling")
+
+
 
 elif st.session_state.page == "chat":
     left, right = st.columns([6, 2])
@@ -160,6 +175,8 @@ elif st.session_state.page == "chat":
         with st.chat_message("assistant"):
             st.write(reply)
 
+
+
 elif st.session_state.page == "booking":
     st.markdown("## Book an Appointment (Manual)")
 
@@ -192,5 +209,8 @@ elif st.session_state.page == "booking":
         )
         st.success(f"✅ Booking confirmed! ID: {booking_id}")
 
+
+
 elif st.session_state.page == "admin":
     render_admin_dashboard()
+

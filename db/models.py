@@ -4,14 +4,12 @@ def save_booking(data):
     conn = sqlite3.connect("bookings.db")
     cur = conn.cursor()
 
-    # Save customer
     cur.execute(
         "INSERT INTO customers (name, email, phone) VALUES (?, ?, ?)",
         (data["name"], data["email"], data["phone"])
     )
     customer_id = cur.lastrowid
 
-    # Save booking
     cur.execute(
         """
         INSERT INTO bookings (customer_id, booking_type, date, time)
